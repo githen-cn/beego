@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html itemscope="" itemtype="http://schema.org/Organization">
+<head>
+<title>beego入门教程 | beego.me</title>
+<meta name="description" content="beego入门教程，beego的知识点，golang应用框架."/>
+<meta name="keywords" content="beego, beedb, golang"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/yui-reset-fonts.css" />
+<link rel="stylesheet" href="../css/main.css?ver=20130308" type="text/css" media="all" />
+<link rel="stylesheet" href="../css/colorbox.css" type="text/css" media="all" />
+<link rel="stylesheet" href="../css/campaign.css?ver=20130213" type="text/css" media="all" />
+<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="../css/git.css" type="text/css" media="all" />
+<script src="../js/swfobject.js" type="text/javascript" charset="utf-8"></script>
+<script>
+$(function(){
+
+$('a[href*="#!"]').live('click',function(){
+	// alert($('#overview'+'-content').html());
+	var id = $(this).attr("href").substr(2);
+	$(window).scrollTo('.tabsContent:visible');
+	$("div[class='tabsContent']").html($("#"+id+'-content').html());
+	// $('#overview'+'-content').show();
+});
+});
+</script>
+</head>
+<body id="customNav" class="campaign tutorial git gitbasics en">
+<div id="container">
+<div id="header" class="noNav">
+<div class="box">
+<div id="logo"><a href="http://beego.me/beego">beego应用框架</a></div>
+</div>
+</div>
+<div id="content">
+<div id="companyHeader" class="wrapper sectionNavCustom" style="margin-top:40px;">
+<div class="box">
+<div id="companyLogo">
+<a href="http://beego.me/beego">beego应用框架之入门</a>
+</div>
+<div id="companyNav">
+<ul>
+<li class=''>
+<a href="/beego/">
+概括
+</a>
+</li>
+<li class='selected'>
+<a href="/beego/tutorial">
+beego入门
+</a>
+</li>
+<li class=''>
+<a href="/beego/examples">
+beego实例
+</a>
+</li>
+</ul>
+</div>
+<div id="subNav" style="margin-bottom:0;">
+<ul>
+<li class='selected'>
+<a href="/beego/tutorial/hello.html">1. hello</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/router.html">2. Router</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/filters.html">3. Filters</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/controller.html">4. Controller</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/template.html">5. Template</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/variables.html">6. Variables</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/config.html">7. Config</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/cache.html">8. Cache</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/logger.html">9. Logger</a>
+</li>
+<li class=''>
+<a href="/beego/tutorial/bee.html">10. Bee</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- 2 - column template: -->
+<div id="tabsection" class="wrapper">
+<div class="box">
+<div id="tabsDef" class="clearfix vertical">
+<ul id="tabsNav">
+<!-- if any tabs in this are seoTabs, they should all behave as SEO tabs, so first test if any tabs are seo tabs -->
+<li name="overview" id="overview-tab" class="selected"><a href="#!overview" title="beego入门教程 | 整体结构">beego设计思路</a>
+</li>
+<li name="install" id="install-tab"><a href="#!install" title="beego入门教程 | beego安装">beego安装</a>
+</li>
+<li name="hello" id="hello-tab"><a href="#!hello" title="beego入门教程 | beego之hello world">beego之hello world</a>
+</li>
+<li name="dirlist" id="dirlist-tab" ><a href="#!dirlist" title="beego入门教程 | 目录结构">beego推荐结构目录</a>
+</li>
+<li name="develop" id="develop-tab" ><a href="#!develop" title="beego入门教程 | 开发模式">beego开发模式</a>
+</li>
+</ul>
+<div class="tabsContent">
+<div class="outer">
+<div class="inner">
+</div>
+</div>
+</div>
+</div>
+
+<div style="display:none" id="overview-content">
+<div class="outer">
+<div class="inner">
+	<p style="text-align: center"><b>beego设计思路</b></p>
+	<p>beego是一个类似python的tornado框架，采用了RESTFul的设计思路，使用Go编写出來的一个极轻量级、高可伸缩性和高性能的Web应用框架。</p>
+	<p>beego跟其他主流的Web服务器框架不同是采用RESTFul方式来设计，采用Go的struct的组合和Go语言的反射来实现异步处理请求，响应快速，可处理上万并发连接，特别适用于各种服务类的应用。主要有如下的特点：</p>
+	<ul class="def">
+		<li>支持MVC的方式，用户只需要关注逻辑，实现对应method的方法即可</li>
+		<li>支持websocket，通过自定义Handler实现集成sockjs等方式实现</li>
+		<li>支持自定义路由，支持各种方式的路由，正则、语意均支持，类似sinatra</li>
+		<li>session集成，支持memory、file、redis、mysql等存储</li>
+		<li>表单处理自动化解析，用户可以很方便的获取数据</li>
+		<li>日志分级系统，用户可以很方便的调试和应用日志记录</li>
+		<li>自定义配置文件，支持ini格式的文本配置，可以方便的在系统中调参数</li>
+		<li>采用了Go内置的模板，集成实现了很多Web开发中常用的函数</li>
+	</ul>
+	<p style="text-align: center"><img src="../images/beegojiegou.png" style=" max-width:100%;" alt="Switch to beego" class="" style="margin-top:0px;"></p>
+</div>
+</div>
+</div>
+
+<div style="display:none" id="hello-content">
+<div class="outer">
+<div class="inner">
+<p style="text-align: center;"><b>Hello World</b></p>
+<p>一个最小最简单的应用如下代码所示：</p>
+<p>
+	<code class="plain">
+		package main<br />
+		<br />
+		import (<br />
+		    "github.com/astaxie/beego"<br />
+		)<br />
+		<br />
+		type MainController struct {<br />
+		    beego.Controller<br />
+		}<br />
+		<br />
+		func (this *MainController) Get() {<br />
+		    this.Ctx.WriteString("hello world")<br />
+		}<br />
+		<br />
+		func main() {<br />
+		    beego.Router("/", &MainController{})<br />
+		    beego.Run()<br />
+		}<br />
+
+	</code>
+</p>
+<p>把上面的代码保存为hello.go，然后通过命令行进行编译并执行：</p>
+<p>
+	<code class="plain">
+		$ go build main.go<br />
+		$ ./hello<br />
+	</code>
+</p>
+<p>这个时候你可以打开你的浏览器，通过这个地址浏览<a>http://127.0.0.1:8080</a>返回“hello world”</p>
+<p>那么上面的代码到底做了些什么呢？</p>
+<p>1、首先我们引入了包github.com/astaxie/beego,我们知道Go语言里面引入包会深度优先的去执行引入包的初始化(变量和init函数，更多)，beego包中会初始化一个BeeAPP的应用，初始化一些参数。</p>
+
+<p>2、定义Controller，这里我们定义了一个struct为MainController，充分利用了Go语言的组合的概念，匿名包含了beego.Controller，这样我们的MainController就拥有了beego.Controller的所有方法。</p>
+
+<p>3、定义RESTFul方法，通过匿名组合之后，其实目前的MainController已经拥有了Get、Post、Delete、Put等方法，这些方法是分别用来对应用户请求的Method函数，如果用户发起的是POST请求，那么就执行Post函数。所以这里我们定义了MainController的Get方法用来重写继承的Get函数，这样当用户GET请求的时候就会执行该函数。</p>
+
+<p>4、定义main函数，所有的Go应用程序和C语言一样都是Main函数作为入口，所以我们这里定义了我们应用的入口。</p>
+
+<p>5、Router注册路由，路由就是告诉beego，当用户来请求的时候，该如何去调用相应的Controller，这里我们注册了请求/的时候，请求到MainController。这里我们需要知道，Router函数的两个参数函数，第一个是路径，第二个是Controller的指针。</p>
+
+<p>6、Run应用，最后一步就是把在1中初始化的BeeApp开启起来，其实就是内部监听了8080端口:Go默认情况会监听你本机所有的IP上面的8080端口</p>
+
+<p>停止服务的话，请按ctrl+c</p>
+
+
+</p>
+
+</div>
+</div>
+</div>
+
+
+<div style="display:none" id="install-content">
+<div class="outer">
+<div class="inner">
+<p style="text-align: center;"><b>安装入门</b></p>
+<p>beego虽然是一个简单的框架，但是其中用到了很多第三方的包，所以在你安装beego的过程中Go会自动安装其他关联的包。</p>
+<p>
+	<ul class="def">
+		<li>当然第一步你需要安装Go，如何安装Go请参考我的书&nbsp;<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.1.md">第一章</a></li>
+		<li>安装beego</li>
+	</ul>
+</p>
+<p><code class="plain">go get github.com/astaxie/beego</code></p>
+<p>
+<ul class="def">
+	<li>安装bee工具,这个工具可以用来快速的建立beego的应用</li>
+</ul>
+</p>
+<p><code class="plain">go get github.com/astaxie/bee</code></p>
+<p>这样就完成了beego的安装，你就可以开始开发了,可以通过bee工具来创建beego项目</p>
+<p style="text-align: center"><img src="../images/bee.png" alt="Switch to beego" class="" style="margin-top:0px;"></p>
+<p>beego依赖的第三方包有如下：</p>
+<p>
+	<ul class="def">
+		<li>session模块：github.com/astaxie/beego/session<br></li>
+		<li>session模块中支持redis引擎：github.com/garyburd/redigo/redis<br></li>
+		<li>session模块中支持mysql引擎：github.com/go-sql-driver/mysql<br></li>
+		<li>模板函数中支持markdown转化：github.com/russross/blackfriday<br></li>
+	</ul>
+</p>
+</div>
+</div>
+</div>
+
+
+<div style="display:none" id="dirlist-content">
+<div class="outer">
+<div class="inner">
+<p style="text-align: center;"><b>目录结构</b></p>
+<p>通过如下命令创建beego项目，首先进入gopath目录</p>
+<p><code>bee create hello</code></p>
+<p>这样就建立了一个项目hello，目录结构如下所示</p>
+<p>
+	<code>
+	.<br/>
+	├── conf<br/>
+	│   └── app.conf<br/>
+	├── controllers<br/>
+	│   └── default.go<br/>
+	├── main.go<br/>
+	├── models<br/>
+	├── static<br/>
+	│   ├── css<br/>
+	│   ├── img<br/>
+	│   └── js<br/>
+	└── views<br/>
+	    └── index.tpl<br/>
+</code>
+</p>
+</div>
+</div>
+</div>
+
+<div style="display:none" id="develop-content">
+<div class="outer">
+<div class="inner">
+<p style="text-align: center;"><b>开发模式</b></p>
+<p>通过如下命令创建beego项目，首先进入gopath目录</p>
+<p>我们可以通过如下的方式改变我们的模式：</p>
+<p><code>beego.RunMode = "pro"</code></p>
+<p>或者我们在conf/app.conf下面设置如下：</p>
+<p><code>runmode = pro</code></p>
+<p>以上两种效果一样。</p>
+<p>开发模式中</p>
+<p>
+	<ul  class="def">
+		<li>开发模式下，如果你的目录不存在views目录，那么会出现类似下面的错误提示：<br></li>
+		<li><code>2013/04/13 19:36:17 [W] [stat views: no such file or directory]</code></li>
+		<li>模板会自动重新加载不缓存。<br></li>
+		<li>如果服务端出错，那么就会在浏览器端显示如下类似的截图：<br></li>
+	</ul>
+<p style="text-align: center;"><img src="../images/dev.png" alt="Switch to beego" class="" style="margin-top:0px;"></p>
+</div>
+</div>
+</div>
+
+<script>
+$(function(){
+searchableTabNavigation({
+listItem: "#tabsNav li",
+contentItem: ".tabsContent"
+});
+});
+</script>
+</div>
+</div>
+</div>
+</div>
+<script>if ( typeof window.JSON === 'undefined' ) { document.write('<script src="../js/json2.js"><\/script>'); }</script>
+<script src="../js/jquery-plugins-min.js"></script>
+<script src="../js/jquery-ui.min.js" type="text/javascript"></script>
+<script src="../js/scripts.js?ver=20130222"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+var deviceAgent = navigator.userAgent.toLowerCase();
+is_iOS = deviceAgent.match(/(iphone|ipod|ipad)/);
+$("#newsletterSubscribe").attr('value', "Enter your email").css('color','#036');
+$("#newsletterSubscribe").focus(function(){
+$("#newsletterSubscribe").attr('value', "").css('color','#fff');
+});
+$('#subscribeForm').submit(function(e){
+var emailInput = $("#newsletterSubscribe").attr('value');
+var filter = /^\S+@\S+\.\S+$/;
+if(filter.test(emailInput)){
+return true;
+} else {
+e.preventDefault();
+$('.emailError').show();
+return false;
+}
+});
+$('.expandable tr.hasDescription').click(function(){
+if (!$(this).hasClass('open')) {
+$('.description').hide();
+$('.expandable tr').removeClass('open');
+$(this).addClass('open').next('.description').slideDown('fast');
+} else {
+$(this).removeClass('open').next('.description').slideUp('fast');
+}
+});
+$('.accordionBox li.hasDescription').click(function(){
+if (!$(this).hasClass('open')) {
+$('.description').slideUp('fast');
+$('.accordionBox li').removeClass('open');
+$(this).addClass('open').find('.description').stop().slideDown('fast');
+} else {
+$(this).removeClass('open').find('.description').slideUp('fast');
+}
+});
+screenshotTour();
+removeRoundTop();
+function removeRoundTop(){
+if ($('#featureNav li:first,.vertical #tabsNav li:first').hasClass('selected')) {
+$('.tourContent').addClass('navTop');
+$('.campaign #tabsDef.vertical').addClass('navTop');
+} else {
+$('.tourContent').removeClass('navTop');
+$('.campaign #tabsDef.vertical').removeClass('navTop');
+}
+}
+$('#featureNav ul,.vertical #tabsNav').click(function(){removeRoundTop();});
+initVideos();
+
+$("div[class='tabsContent']").html($('#overview-content').html());
+});
+</script>
+</body>
+</html>
